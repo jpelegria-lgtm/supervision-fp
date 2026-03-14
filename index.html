@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Supervisión Experto FP</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a2333;font-size:14px}
+.header{background:#1a3a6e;color:#fff;padding:16px 28px;display:flex;align-items:center;gap:14px}
+.header-icon{width:50px;height:50px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.header h1{font-size:16px;font-weight:700;line-height:1.3}
+.header p{font-size:11px;opacity:.8;margin-top:2px}
+.badge{background:#c8a400;color:#fff;font-size:9px;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:3px}
+.container{max-width:920px;margin:20px auto;padding:0 14px}
+.progress-bar{height:5px;background:#d0d8e8;border-radius:3px;margin-bottom:18px;overflow:hidden}
+.progress-fill{height:100%;background:#1a3a6e;border-radius:3px;transition:width .4s}
+.section{background:#fff;border-radius:8px;margin-bottom:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.sec-hdr{background:#1a3a6e;color:#fff;padding:9px 16px;font-size:12px;font-weight:700;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
+.sec-num{background:#c8a400;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.sec-body{padding:16px}
+.row{display:grid;gap:10px;margin-bottom:10px}
+.c1{grid-template-columns:1fr}
+.c2{grid-template-columns:1fr 1fr}
+.c3{grid-template-columns:1fr 1fr 1fr}
+label{display:block;font-size:10px;font-weight:700;color:#1a3a6e;margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px}
+input,select,textarea{width:100%;border:1.5px solid #d0d8e8;border-radius:5px;padding:7px 9px;font-size:13px;color:#1a2333;background:#fafbfd;transition:border .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#1a3a6e;background:#fff}
+select{cursor:pointer}
+textarea{resize:vertical;min-height:72px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.btn{flex:1;min-width:150px;padding:12px;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
+.btn-pdf{background:#1a3a6e;color:#fff}.btn-pdf:hover{background:#0f2450}
+.btn-email{background:#c8a400;color:#fff}.btn-email:hover{background:#a08300}
+.btn-both{background:#27ae60;color:#fff}.btn-both:hover{background:#1e8c4d}
+.btn-pa{background:#0078d4;color:#fff}.btn-pa:hover{background:#005a9e}
+.cod-box{display:flex;gap:7px;align-items:flex-end}
+.cod-box input{flex:1}
+.cod-box button{padding:7px 12px;background:#1a3a6e;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:12px;white-space:nowrap}
+.validated{border-color:#27ae60!important;background:#eefaf3!important}
+.msg{font-size:11px;margin-top:5px;padding:5px 9px;border-radius:4px}
+.msg.ok{background:#eefaf3;color:#27ae60;border:1px solid #b2dfcc}
+.msg.err{background:#fdf0ee;color:#c0392b;border:1px solid #f5c6c0}
+.modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal-box{background:#fff;border-radius:10px;padding:22px;width:90%;max-width:440px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.modal-box h3{color:#1a3a6e;margin-bottom:14px;font-size:15px}
+.modal-btns{display:flex;gap:9px;margin-top:14px}
+.modal-btns button{flex:1;padding:9px;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:12px}
+.btn-send{background:#c8a400;color:#fff}
+.btn-cancel{background:#e0e0e0;color:#555}
+.info-note{font-size:10px;color:#888;padding:6px 10px;background:#f7f9fc;border-radius:4px;border-left:3px solid #c8a400;margin-top:6px}
+@media(max-width:600px){.c2,.c3{grid-template-columns:1fr}.header h1{font-size:13px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">📋</div>
+  <div>
+    <h1>Informe de Supervisión de Experto del Sector Productivo — FP</h1>
+    <p>Inspección Educativa · Formación Profesional</p>
+    <span class="badge">RD 499-500/2024 · RD 565/2024 · RD 174/2021 · RD 659/2023 · RD 1297/1995 · RD 1298/1995 · RD 370/2001 · cap. IV tít. V</span>
+  </div>
+</div>
+
+<div class="container">
+<div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+
+<!-- SECCIÓN 1 -->
+<div class="section">
+  <div class="sec-hdr"><span class="sec-num">1</span> Datos del Centro Educativo</div>
+  <div class="sec-body">
+    <div class="row c2">
+      <div><label>Nombre del Centro</label><input id="centro" placeholder="IES / CIPFP / Centro..."></div>
+      <div><label>Código de Centro</label><input id="codCentro" placeholder="46xxxxxx"></div>
+    </div>
+    <div class="row c3">
+      <div><label>Localidad</label><input id="localidad" placeholder="Municipio"></div>
+      <div><label>Provincia</label>
+        <select id="provincia"><option value="">-- Seleccionar --</option>
+        <option>Álava</option><option>Albacete</option><option>Alicante</option><option>Almería</option>
+        <option>Asturias</option><option>Ávila</option><option>Badajoz</option><option>Barcelona</option>
+        <option>Burgos</option><option>Cáceres</option><option>Cádiz</option><option>Cantabria</option>
+        <option>Castellón</option><option>Ciudad Real</option><option>Córdoba</option><option>A Coruña</option>
+        <option>Cuenca</option><option>Girona</option><option>Granada</option><option>Guadalajara</option>
+        <option>Guipúzcoa</option><option>Huelva</option><option>Huesca</option><option>Illes Balears</option>
+        <option>Jaén</option><option>León</option><option>Lleida</option><option>Lugo</option>
+        <option>Madrid</option><option>Málaga</option><option>Murcia</option><option>Navarra</option>
+        <option>Ourense</option><option>Palencia</option><option>Las Palmas</option><option>Pontevedra</option>
+        <option>La Rioja</option><option>Salamanca</option><option>S.C. de Tenerife</option>
+        <option>Segovia</option><option>Sevilla</option><option>Soria</option><option>Tarragona</option>
+        <option>Teruel</option><option>Toledo</option><option>Valencia</option><option>Valladolid</option>
+        <option>Vizcaya</option><option>Zamora</option><option>Zaragoza</option>
+        <option>Ceuta</option><option>Melilla</option>
+        </select>
+      </div>
+      <div><label>Fecha de Visita</label><input type="date" id="fechaVisita"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 2 -->
+<div class="section">
+  <div class="sec-hdr"><span class="sec-num">2</span> Datos del Experto Supervisado y Módulo Impartido</div>
+  <div class="sec-body">
+    <div class="row c2">
+      <div><label>Nombre y Apellidos del Experto</label><input id="experto" placeholder="Nombre completo"></div>
+      <div><label>DNI / NIE</label><input id="dni" placeholder="00000000X"></div>
+    </div>
+    <div class="row c2">
+      <div><label>Número de Puesto</label><input id="numeroPuesto" placeholder="Número de puesto asignado"></div>
+      <div><label>Modalidad de Vinculación con el Centro</label>
+        <select id="modalidad"><option value="">-- Seleccionar --</option>
+          <option>Contrato laboral indefinido</option>
+          <option>Contrato temporal por sustitución (art. 170 RD 659/2023)</option>
+        </select>
+      </div>
+    </div>
+    <div class="row c1">
+      <div>
+        <label>Familia Profesional / Ámbito</label>
+        <select id="familia" onchange="onFamilia()"><option value="">-- Seleccionar familia profesional --</option></select>
+      </div>
+    </div>
+    <div class="row c1">
+      <div>
+        <label>Ciclo Formativo / Curso de Especialización</label>
+        <select id="ciclo" onchange="onCiclo()"><option value="">-- Seleccionar ciclo --</option></select>
+      </div>
+    </div>
+    <div class="row c2">
+      <div>
+        <label>Módulo Profesional</label>
+        <select id="modulo" onchange="onModulo()"><option value="">-- Seleccionar módulo --</option></select>
+      </div>
+      <div><label>Código del Módulo</label><input id="codModulo" readonly placeholder="Se rellena automáticamente"></div>
+    </div>
+    <div class="info-note" id="normNote" style="display:none"></div>
+    <div class="row c2">
+      <div><label>Grado</label>
+        <select id="grado"><option value="">-- Seleccionar --</option>
+          <option>Grado Básico (FPB)</option>
+          <option>Grado Medio (CFGM)</option>
+          <option>Grado Superior (CFGS)</option>
+          <option>Grado Superior Artes Plásticas y Diseño</option>
+          <option>Grado Medio Artes Plásticas y Diseño</option>
+          <option>Curso de Especialización (GM)</option>
+          <option>Curso de Especialización (GS) / Máster FP</option>
+        </select>
+      </div>
+      <div><label>Curso Académico</label><input id="cursoAcad" placeholder="Ej: 2024/2025"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 3 -->
+<div class="section">
+  <div class="sec-hdr"><span class="sec-num">3</span> Rúbrica de Evaluación de la Supervisión</div>
+  <div class="sec-body">
+    <div style="background:#eef2f9;border:1.5px solid #b0bcd8;border-radius:7px;padding:14px 18px;margin-bottom:18px">
+      <div style="font-size:11px;font-weight:700;color:#1a3a6e;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">
+        ✔ Verificación Normativa Previa — Determinación de Plantilla (Art. 10 Instrucciones 2025/2026 · RD 659/2023 Disp. Adic. 15ª)
+      </div>
+      <div style="font-size:11px;color:#555;margin-bottom:10px;font-style:italic">
+        La Inspección de Educación debe confirmar los siguientes requisitos antes de autorizar la figura del Experto del Sector Productivo. Marque cada condición verificada:
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:#1a3a6e">
+          <input type="checkbox" id="chk1" style="margin-top:2px;width:15px;height:15px;accent-color:#1a3a6e;flex-shrink:0">
+          <span><strong>1.</strong> Se ha comprobado que el módulo profesional <strong>no puede atribuirse a ninguna especialidad de los cuerpos docentes de FP ni del Cuerpo de Profesores de Enseñanza Secundaria en general.</strong></span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:#1a3a6e">
+          <input type="checkbox" id="chk2" style="margin-top:2px;width:15px;height:15px;accent-color:#1a3a6e;flex-shrink:0">
+          <span><strong>2.</strong> La necesidad del Experto del Sector Productivo está <strong>contemplada en la propuesta de plantilla del centro</strong> para el curso 2025/2026.</span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:#1a3a6e">
+          <input type="checkbox" id="chk3" style="margin-top:2px;width:15px;height:15px;accent-color:#1a3a6e;flex-shrink:0">
+          <span><strong>3.</strong> Se han indicado en la propuesta de plantilla <strong>las horas de desdoble</strong> que asumirá el Experto del Sector Productivo, si procede.</span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:#1a3a6e">
+          <input type="checkbox" id="chk4" style="margin-top:2px;width:15px;height:15px;accent-color:#1a3a6e;flex-shrink:0">
+          <span><strong>4.</strong> Se ha verificado que el <strong>número de puestos creados está justificado y minimizado</strong> respecto a las horas asignadas, conforme al principio de economía de puestos.</span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:#1a3a6e">
+          <input type="checkbox" id="chk5" style="margin-top:2px;width:15px;height:15px;accent-color:#1a3a6e;flex-shrink:0">
+          <span><strong>5.</strong> La contratación se fundamenta en <strong>grupos autorizados por la Dirección General de Formación Profesional.</strong></span>
+        </label>
+      </div>
+      <div id="chkAviso" style="display:none;margin-top:10px;background:#fdecea;border:1px solid #e57373;border-radius:5px;padding:8px 12px;font-size:11px;color:#b71c1c;font-weight:600">
+        ⚠ Atención: Deben verificarse todos los requisitos normativos previos antes de generar el informe.
+      </div>
+    </div>
+
+    <div style="margin-top:14px;margin-bottom:4px">
+      <label style="font-size:11px;font-weight:700;color:#1a3a6e;text-transform:uppercase;letter-spacing:.5px">Necesidad detectada sobre el puesto de Experto del Sector Productivo</label>
+      <select id="necesidad" style="width:100%;margin-top:6px;padding:9px 12px;border:1.5px solid #b0bcd8;border-radius:6px;font-size:13px;color:#1a3a6e;background:#fff">
+        <option value="">-- Seleccionar necesidad detectada --</option>
+        <option value="Eliminación del puesto de Personal Experto en el Sector Productivo">Eliminación del puesto de Personal Experto en el Sector Productivo</option>
+        <option value="Reducción de horas del puesto de Personal Experto en el Sector Productivo">Reducción de horas del puesto de Personal Experto en el Sector Productivo</option>
+        <option value="Aumento de horas del puesto de Personal Experto en el Sector Productivo">Aumento de horas del puesto de Personal Experto en el Sector Productivo</option>
+      </select>
+    </div>
+
+    <div class="row c1" style="margin-top:14px"><div>
+      <label>Justificación</label>
+      <textarea id="justificacion" rows="5" placeholder="Fundamente la necesidad detectada con base en los hechos constatados y la normativa aplicable..."></textarea>
+    </div></div>
+    <div class="row c1"><div>
+      <label>Propuesta</label>
+      <textarea id="propuesta" rows="4" placeholder="Redacte la propuesta concreta que eleva la Inspección Educativa a la autoridad competente..."></textarea>
+    </div></div>
+  </div>
+</div>
+
+<!-- SECCIÓN 4 -->
+<div class="section">
+  <div class="sec-hdr"><span class="sec-num">4</span> Identificación y Validación del Inspector/a</div>
+  <div class="sec-body">
+    <div class="row c2">
+      <div><label>Nombre y Apellidos del Inspector/a</label><input id="inspector" placeholder="Nombre completo"></div>
+      <div><label>Demarcación de Inspección</label><input id="demarc" placeholder="Demarcación territorial"></div>
+    </div>
+    <div class="row c2">
+      <div>
+        <label>Código de Identificación del Inspector</label>
+        <div class="cod-box">
+          <input id="codInspector" placeholder="Ej: INS-2024-0001">
+          <button onclick="validarCod()">Validar ✓</button>
+        </div>
+        <div id="codMsg"></div>
+      </div>
+      <div><label>Firma (nombre completo como validación)</label><input id="firma" placeholder="Firma electrónica — nombre completo"></div>
+    </div>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="btn btn-pdf" onclick="genPDF()">📄 Descargar PDF</button>
+  <button class="btn btn-email" onclick="openEmail()">📧 Enviar por Email</button>
+  <button class="btn btn-both" onclick="ambos()">📄 + 📧 Descargar y Enviar</button>
+  <button class="btn btn-pa" onclick="openPA()">&#9729;&#65039; Enviar a SharePoint</button>
+</div>
+<div id="paStatus" style="display:none;margin-top:8px;padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;text-align:center"></div>
+<p style="text-align:center;font-size:10px;color:#aaa;margin-top:10px;margin-bottom:20px">
+  Documento generado conforme a RD 499-500/2024 · RD 565/2024 · RD 174/2021 · RD 659/2023 (cap. IV, tít. V) · RD 1297/1995 · RD 1298/1995 · RD 370/2001 · solo módulos con atribución a Expertos del Sector Productivo
+</p>
+</div>
+
+<!-- MODAL EMAIL -->
+<!-- MODAL POWER AUTOMATE -->
+<div class="modal-bg" id="paModal">
+  <div class="modal-box">
+    <h3>&#9729;&#65039; Enviar datos a SharePoint</h3>
+    <p style="font-size:11px;color:#555;margin-bottom:12px">Introduce la URL del flujo de Power Automate. Una vez configurada se guardará para futuras sesiones.</p>
+    <div class="row c1" style="margin-bottom:8px">
+      <label>URL del flujo HTTP de Power Automate</label>
+      <input id="paUrl" placeholder="https://prod-xx.westeurope.logic.azure.com/workflows/...">
+    </div>
+    <div style="font-size:10px;color:#888;background:#f7f9fc;padding:7px 10px;border-radius:4px;border-left:3px solid #0078d4;margin-bottom:10px">
+      Esta URL la obtienes en Power Automate al crear el flujo con el disparador <strong>"Cuando se recibe una solicitud HTTP"</strong>. Ver instrucciones adjuntas.
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closePA()">Cancelar</button>
+      <button style="flex:1;padding:9px;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:12px;background:#0078d4;color:#fff" onclick="sendToPA()">Enviar &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="emailModal">
+  <div class="modal-box">
+    <h3>📧 Enviar Informe por Email</h3>
+    <div class="row c1" style="margin-bottom:8px"><label>Destinatario</label><input type="email" id="eDest" placeholder="destinatario@educacion.es"></div>
+    <div class="row c1" style="margin-bottom:8px"><label>CC (opcional)</label><input type="email" id="eCC" placeholder="cc@ejemplo.es"></div>
+    <div class="row c1" style="margin-bottom:8px"><label>Asunto</label><input id="eAsunto" value="Informe Supervisión Experto Sector Productivo FP"></div>
+    <div class="row c1"><label>Mensaje adicional</label><textarea id="eMsg" style="min-height:55px" placeholder="Se adjunta el informe de supervisión..."></textarea></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeEmail()">Cancelar</button>
+      <button class="btn-send" onclick="sendEmail()">Enviar →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DB = {
+
+  // ── CURSO DE ESPECIALIZACIÓN ─────────────────────────────────────────────
+  "Comercio y Marketing — Comercio electrónico (CE GS)": {
+    norm: "RD 565/2024 (CE GS) — Anexo III · BOE-A-2024-12502",
+    ciclos: {
+      "CE GS Comercio electrónico (Máster FP)": [
+        {c:"5130", n:"Administración de plataformas de comercio electrónico"},
+        {c:"5131", n:"Gestión del marketing relacional aplicado al comercio electrónico"},
+        {c:"5132", n:"Logística del comercio electrónico"},
+        {c:"5133", n:"Atención al cliente, consumidor y/o usuario de comercio electrónico"},
+      ]
+    }
+  },
+
+  // ── GRADO SUPERIOR (RD 500/2024) ────────────────────────────────────────
+  "Artes Escénicas y Espectáculos — Artista Fallero": {
+    norm: "RD 500/2024 (GS) — Anexo XXXIX · RD 1690/2011 mod.",
+    ciclos: {
+      "CFGS Artista Fallero y Construcción de Escenografías": [
+        {c:"1127", n:"Diseño técnico de escenografías y fallas"},
+        {c:"1219", n:"Planificación de la producción"},
+        {c:"1238", n:"Organización de la producción de estructuras y maquinaria escénica"},
+        {c:"1239", n:"Organización de la producción de figuras corpóreas y ninots"},
+        {c:"1240", n:"Organización de la producción de utilería"},
+        {c:"1241", n:"Organización de la plantà de las fallas"},
+        {c:"1242", n:"Organización del montaje de decorados"},
+        {c:"1243", n:"Ambientación y servicio de espectáculos"},
+        {c:"1244", n:"Proyecto intermodular de construcción de escenografías y fallas"},
+      ]
+    }
+  },
+
+  "Seguridad y Medio Ambiente — Coordinación de Emergencias (GS)": {
+    norm: "RD 500/2024 (GS) — Anexo LV · RD 906/2013 mod.",
+    ciclos: {
+      "CFGS Coordinación de Emergencias y Protección Civil": [
+        {c:"1501", n:"Planificación en emergencias y protección civil"},
+        {c:"1502", n:"Evaluación de riesgos y medidas preventivas"},
+        {c:"1503", n:"Planificación y desarrollo de acciones formativas, informativas y divulgativas en protección civil y emergencias"},
+        {c:"1504", n:"Supervisión de la intervención en riesgos producidos por fenómenos naturales"},
+        {c:"1505", n:"Supervisión de la intervención en riesgos tecnológicos y antrópicos"},
+        {c:"1506", n:"Supervisión de la intervención en incendios forestales y quemas prescritas"},
+        {c:"1507", n:"Supervisión de la intervención en operaciones de incendios urbanos y emergencias ordinarias"},
+        {c:"1508", n:"Supervisión de la intervención en operaciones de salvamento y rescate"},
+        {c:"1509", n:"Supervisión de las acciones de apoyo a las personas afectadas por desastres y catástrofes"},
+        {c:"1510", n:"Gestión de recursos de emergencias y protección civil"},
+        {c:"1511", n:"Proyecto intermodular de coordinación de emergencias y protección civil"},
+      ]
+    }
+  },
+
+  "Formación para la Movilidad Segura y Sostenible": {
+    norm: "RD 174/2021 mod. RD 500/2024 — Anexo LXX",
+    ciclos: {
+      "CFGS Formación para la Movilidad Segura y Sostenible": [
+        {c:"1653", n:"Técnicas de conducción (I)"},
+        {c:"1655", n:"Didáctica de la enseñanza práctica de la conducción"},
+        {c:"1657", n:"Seguridad vial"},
+      ]
+    }
+  },
+
+  "Servicios Socioculturales y a la Comunidad — Mediación Comunicativa": {
+    norm: "RD 500/2024 (GS) — Anexo LXIII · RD 831/2014 mod.",
+    ciclos: {
+      "CFGS Mediación Comunicativa": [
+        {c:"1115", n:"Lengua de signos española"},
+        {c:"1116", n:"Ámbitos de aplicación de la lengua de signos española"},
+        {c:"1118", n:"Técnicas de intervención comunicativa"},
+      ]
+    }
+  },
+
+  "Transporte y Mantenimiento de Vehículos — Transporte Marítimo (GS)": {
+    norm: "RD 500/2024 (GS) — Anexo LXXVII · RD 1691/2011 mod.",
+    ciclos: {
+      "CFGS Transporte Marítimo y Pesca de Altura": [
+        {c:"0805", n:"Pesca de altura y gran altura"},
+      ]
+    }
+  },
+
+  // ── GRADO MEDIO (RD 499/2024) ────────────────────────────────────────────
+  "Transporte y Mantenimiento de Vehículos — Conducción (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo · RD 555/2012 mod.",
+    ciclos: {
+      "CFGM Conducción de Vehículos de Transporte por Carretera": [
+        {c:"1204", n:"Conducción inicial (I)"},
+        {c:"1205", n:"Conducción racional y segura (II)"},
+      ]
+    }
+  },
+
+  "Seguridad y Medio Ambiente — Emergencias y Protección Civil (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo · RD mod.",
+    ciclos: {
+      "CFGM Emergencias y Protección Civil": [
+        {c:"1528", n:"Mantenimiento y comprobación del funcionamiento de los medios materiales empleados en la prevención de riesgos de incendios y emergencias"},
+        {c:"1529", n:"Vigilancia e intervención operativa en incendios forestales"},
+        {c:"1530", n:"Intervención operativa en extinción de incendios urbanos"},
+        {c:"1531", n:"Intervención operativa en sucesos de origen natural, tecnológico y antrópico"},
+        {c:"1532", n:"Intervención operativa en actividades de salvamento y rescate"},
+        {c:"1533", n:"Inspección de establecimientos, eventos e instalaciones para la prevención de incendios y emergencias"},
+        {c:"1534", n:"Coordinación de equipos y unidades de emergencias"},
+      ]
+    }
+  },
+
+  "Seguridad y Medio Ambiente — Seguridad Privada (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo · RD mod.",
+    ciclos: {
+      "CFGM Seguridad": [
+        {c:"1678", n:"Vigilancia e intervención operativa básica en incendios"},
+        {c:"1679", n:"Vigilancia y protección"},
+        {c:"1680", n:"Guardería rural, cinegético, fluvial y marítimo"},
+      ]
+    }
+  },
+
+  "Marítimo-Pesquera — Navegación y Pesca de Litoral (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo · RD mod.",
+    ciclos: {
+      "CFGM Navegación y Pesca de Litoral": [
+        {c:"1029", n:"Pesca de litoral"},
+      ]
+    }
+  },
+
+  "Marítimo-Pesquera — Operaciones Subacuáticas (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo · RD mod.",
+    ciclos: {
+      "CFGM Operaciones Subacuáticas e Hiperbáricas": [
+        {c:"0758", n:"Intervención hiperbárica con aire y nitrox"},
+        {c:"0759", n:"Instalaciones y equipos hiperbáricos"},
+        {c:"0760", n:"Reparaciones y reflotamientos"},
+        {c:"0761", n:"Corte y soldadura"},
+        {c:"0762", n:"Construcción y obra hidráulica"},
+        {c:"1248", n:"Inmersión desde campana húmeda"},
+      ]
+    }
+  },
+
+  "Fabricación Mecánica — Soldadura y Calderería (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo IX · RD 1692/2007 mod.",
+    ciclos: {
+      "CFGM Soldadura y Calderería": [
+        {c:"0095", n:"Montaje"},
+      ]
+    }
+  },
+
+  "Marítimo-Pesquera — Mantenimiento de Embarcaciones de Recreo (GM)": {
+    norm: "RD 499/2024 (GM) — Anexo · RD mod.",
+    ciclos: {
+      "CFGM Mantenimiento de Embarcaciones de Recreo": [
+        {c:"1624", n:"Mantenimiento de aparejos de embarcaciones de recreo"},
+      ]
+    }
+  },
+
+  // ── JOYERÍA DE ARTE — GRADO SUPERIOR · RD 1297/1995 ─────────────────────
+  "Joyería de Arte — Bisutería Artística (GS · RD 1297/1995)": {
+    norm: "RD 1297/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGS Artes Plásticas y Diseño en Bisutería Artística": [
+        {c:"—", n:"Taller de Bisutería"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Bisutería"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Joyería Artística (GS · RD 1297/1995)": {
+    norm: "RD 1297/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGS Artes Plásticas y Diseño en Joyería Artística": [
+        {c:"—", n:"Taller de Joyería"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Joyería"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Orfebrería y Platería Artísticas (GS · RD 1297/1995)": {
+    norm: "RD 1297/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGS Artes Plásticas y Diseño en Orfebrería y Platería Artísticas": [
+        {c:"—", n:"Taller de Orfebrería y Platería"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos: Orfebrería y Platería"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  // ── JOYERÍA DE ARTE — GRADO MEDIO · RD 1298/1995 ────────────────────────
+  "Joyería de Arte — Procedimientos de Orfebrería y Platería (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Procedimientos de Orfebrería y Platería": [
+        {c:"—", n:"Taller de Procedimientos de Orfebrería y Platería"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Orfebrería y Platería"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Moldeado y Fundición de Objetos de Orfebrería (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Moldeado y Fundición de Objetos de Orfebrería": [
+        {c:"—", n:"Taller de Moldeado y Fundición"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Moldeado y Fundición"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Joyería y Bisutería Artísticas (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Joyería y Bisutería Artísticas": [
+        {c:"—", n:"Taller de Joyería y Bisutería Artísticas"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Joyería y Bisutería"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Procedimientos de Joyería Artística (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Procedimientos de Joyería Artística": [
+        {c:"—", n:"Taller de Procedimientos de Joyería Artística"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Joyería Artística"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Grabado Artístico sobre Metal (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Grabado Artístico sobre Metal": [
+        {c:"—", n:"Taller de Grabado Artístico sobre Metal"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Grabado sobre Metal"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Engastado (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Engastado": [
+        {c:"—", n:"Taller de Engastado"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Engastado"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  "Joyería de Arte — Damasquinado (GM · RD 1298/1995)": {
+    norm: "RD 1298/1995, de 21 de julio — Anexo I · BOE núm. 221, 15/09/1995 · Disp. Transitoria Única",
+    ciclos: {
+      "CFGM Artes Plásticas y Diseño — Damasquinado": [
+        {c:"—", n:"Taller de Damasquinado"},
+        {c:"—", n:"Historia de la Orfebrería, Joyería y Bisutería"},
+        {c:"—", n:"Dibujo Artístico y Color"},
+        {c:"—", n:"Modelado y Maquetismo"},
+        {c:"—", n:"Dibujo Técnico"},
+        {c:"—", n:"Proyectos de Damasquinado"},
+        {c:"—", n:"Formación y Orientación Laboral"},
+      ]
+    }
+  },
+
+  // ── FABRICACIÓN MECÁNICA — ÓPTICA DE ANTEOJERÍA · RD 370/2001 ───────────
+  // Módulos con atribución docente "Especialista" según apt. 5.1 del RD.
+  // Son los módulos impartibles por Experto del Sector Productivo cuando
+  // no exista especialidad docente disponible (cap. IV tít. V RD 659/2023).
+  // Se excluyen FOL (Formación y Orientación Laboral) y Administración/
+  // Gestión, que tienen especialidad docente asignada (Cuerpo Secundaria).
+  "Fabricación Mecánica — Óptica de Anteojería (GS · RD 370/2001)": {
+    norm: "RD 370/2001, de 6 de abril — BOE núm. 110, 08/05/2001 · Disp. Adic. 2ª · Apt. 5.1",
+    ciclos: {
+      "CFGS Óptica de Anteojería": [
+        {c:"—", n:"Procesos de fabricación de lentes de contacto"},
+        {c:"—", n:"Procesos de fabricación de lentes oftalmológicas"},
+        {c:"—", n:"Diseño y fabricación de monturas ópticas"},
+        {c:"—", n:"Montajes y reparaciones ópticas"},
+        {c:"—", n:"Atención al cliente en establecimientos de productos ópticos"},
+        {c:"—", n:"Anatomía, fisiopatología y ametropías oculares"},
+      ]
+    }
+  },
+
+};
+
+let codOK = false;
+
+window.onload = () => {
+  const fsel = document.getElementById('familia');
+  Object.keys(DB).forEach(f => {
+    const o = document.createElement('option');
+    o.value = f; o.textContent = f;
+    fsel.appendChild(o);
+  });
+  document.getElementById('fechaVisita').valueAsDate = new Date();
+  document.querySelectorAll('input,select,textarea').forEach(el => el.addEventListener('change', updProg));
+  [1,2,3,4,5].forEach(n => {
+    const el = document.getElementById('chk'+n);
+    if (el) el.addEventListener('change', chksOK);
+  });
+};
+
+function onFamilia() {
+  const f = document.getElementById('familia').value;
+  const csel = document.getElementById('ciclo');
+  csel.innerHTML = '<option value="">-- Seleccionar ciclo --</option>';
+  document.getElementById('modulo').innerHTML = '<option value="">-- Seleccionar módulo --</option>';
+  document.getElementById('codModulo').value = '';
+  document.getElementById('normNote').style.display = 'none';
+  if (!f) return;
+  Object.keys(DB[f].ciclos).forEach(c => {
+    const o = document.createElement('option'); o.value = c; o.textContent = c;
+    csel.appendChild(o);
+  });
+  updProg();
+}
+
+function onCiclo() {
+  const f = document.getElementById('familia').value;
+  const c = document.getElementById('ciclo').value;
+  const msel = document.getElementById('modulo');
+  msel.innerHTML = '<option value="">-- Seleccionar módulo --</option>';
+  document.getElementById('codModulo').value = '';
+  if (!f || !c) return;
+  const note = document.getElementById('normNote');
+  note.textContent = '📌 Base normativa: ' + DB[f].norm;
+  note.style.display = 'block';
+  DB[f].ciclos[c].forEach(m => {
+    const o = document.createElement('option');
+    o.value = m.c; o.textContent = `${m.c} — ${m.n}`; o.dataset.n = m.n;
+    msel.appendChild(o);
+  });
+  updProg();
+}
+
+function onModulo() {
+  const msel = document.getElementById('modulo');
+  const opt = msel.options[msel.selectedIndex];
+  document.getElementById('codModulo').value = opt?.value || '';
+  updProg();
+}
+
+function validarCod() {
+  const cod = document.getElementById('codInspector').value.trim();
+  const msg = document.getElementById('codMsg');
+  if (cod.length >= 5) {
+    codOK = true;
+    document.getElementById('codInspector').classList.add('validated');
+    msg.innerHTML = '<div class="msg ok">✓ Código registrado correctamente.</div>';
+  } else {
+    msg.innerHTML = '<div class="msg err">⚠ El código debe tener al menos 5 caracteres.</div>';
+  }
+  updProg();
+}
+
+function updProg() {
+  const ids = ['centro','localidad','fechaVisita','experto','numeroPuesto','familia','ciclo','modulo','inspector','codInspector'];
+  const n = ids.filter(id => document.getElementById(id)?.value).length;
+  document.getElementById('pFill').style.width = Math.round(n/ids.length*100)+'%';
+}
+
+function getData() {
+  const g = id => document.getElementById(id)?.value || '—';
+  return {
+    centro:g('centro'), codCentro:g('codCentro'), localidad:g('localidad'),
+    provincia:g('provincia'), fechaVisita:g('fechaVisita'),
+    experto:g('experto'), dni:g('dni'), numeroPuesto:g('numeroPuesto'), modalidad:g('modalidad'),
+    familia:g('familia'), ciclo:g('ciclo'),
+    modulo: (() => { const s=document.getElementById('modulo'); return s.options[s.selectedIndex]?.dataset.n || s.value || '—'; })(),
+    codModulo:g('codModulo'), grado:g('grado'), cursoAcad:g('cursoAcad'),
+    numAlumnos:g('numAlumnos'), horaObs:g('horaObs'), duracion:g('duracion'),
+    necesidad: g('necesidad'),
+    justificacion: g('justificacion'),
+    propuesta: g('propuesta'),
+    inspector:g('inspector'), demarc:g('demarc'), codInspector:g('codInspector'), firma:g('firma'),
+    norm: (() => { const f=g('familia'); return f!=='—'&&DB[f]?DB[f].norm:'—'; })(),
+    checklist: [1,2,3,4,5].map(n => document.getElementById('chk'+n)?.checked ? '✔' : '✘')
+  };
+}
+
+function chksOK() {
+  const todos = [1,2,3,4,5].every(n => document.getElementById('chk'+n)?.checked);
+  document.getElementById('chkAviso').style.display = todos ? 'none' : 'block';
+  return todos;
+}
+
+function genPDF() {
+  if (!codOK) { alert('Valide el código del inspector antes de generar el PDF.'); return; }
+  if (!chksOK()) { alert('Debe verificar todos los requisitos normativos previos (checklist sección 3) antes de generar el informe.'); return; }
+  const d = getData();
+  const {jsPDF} = window.jspdf;
+  const doc = new jsPDF({unit:'mm',format:'a4'});
+  const W=210, M=14, CW=W-M*2;
+  let y=0;
+  const chk = (h=12) => { if(y+h>276){doc.addPage();y=20;} };
+
+  doc.setFillColor(26,58,110); doc.rect(0,0,W,22,'F');
+  doc.setFillColor(200,164,0); doc.rect(0,22,W,2,'F');
+  doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(9);
+  doc.text('INSPECCIÓ GENERAL D\'EDUCACIÓ — COMUNITAT VALENCIANA', M, 9);
+  doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
+  doc.text('Secretaria Autonòmica d\'Educació · Avinguda de Campanar, 32 · 46015 · València · ige@gva.es', M, 15);
+  doc.text('Instrucció 8/2025 IGE · Art. 3.1.g Decreto 80/2017 · Orden 17/2019', M, 20);
+  doc.setFont('helvetica','bold'); doc.setFontSize(8);
+  doc.text('Nº Informe: ___ // 202__', W-M, 20, {align:'right'});
+  doc.setTextColor(0,0,0);
+  y = 30;
+
+  doc.setFillColor(235,240,250); doc.rect(M,y,CW,10,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor(26,58,110);
+  doc.text('INFORME DE LA INSPECCIÓN EDUCATIVA — SUPERVISIÓN DE EXPERTO DEL SECTOR PRODUCTIVO', W/2, y+7, {align:'center', maxWidth:CW-4});
+  doc.setTextColor(0,0,0); y+=14;
+
+  const tblRow = (label, value, label2, value2) => {
+    chk(8);
+    doc.setDrawColor(180,190,210); doc.setLineWidth(0.3);
+    doc.setFillColor(232,237,245); doc.rect(M, y, 30, 7, 'FD');
+    doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(26,58,110);
+    doc.text(label, M+2, y+4.5);
+    if(label2){
+      doc.setFillColor(255,255,255); doc.rect(M+30, y, CW/2-30, 7, 'FD');
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(30,30,30);
+      doc.text(String(value||'—').substring(0,38), M+32, y+4.5);
+      doc.setFillColor(232,237,245); doc.rect(M+CW/2, y, 28, 7, 'FD');
+      doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(26,58,110);
+      doc.text(label2, M+CW/2+2, y+4.5);
+      doc.setFillColor(255,255,255); doc.rect(M+CW/2+28, y, CW/2-28, 7, 'FD');
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(30,30,30);
+      doc.text(String(value2||'—').substring(0,30), M+CW/2+30, y+4.5);
+    } else {
+      doc.setFillColor(255,255,255); doc.rect(M+30, y, CW-30, 7, 'FD');
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(30,30,30);
+      doc.text(String(value||'—').substring(0,90), M+32, y+4.5);
+    }
+    doc.setTextColor(0,0,0); y+=7;
+  };
+
+  tblRow('ASUNTO / MOTIVO', 'Informe de supervisión de Experto del Sector Productivo — '+d.modulo+' ('+d.codModulo+')');
+  tblRow('INSPECTOR/A', d.inspector+' ['+d.codInspector+'] — '+d.demarc);
+  tblRow('CENTRO', d.centro, 'CÓDIGO CENTRO', d.codCentro);
+  tblRow('LOCALIDAD', d.localidad+' ('+d.provincia+')', 'CORREO ELECTRÓNICO', '');
+  y+=4;
+
+  chk(14);
+  doc.setFont('helvetica','italic'); doc.setFontSize(7.5); doc.setTextColor(60,60,60);
+  const textoHabil = 'El/La inspector/a de Educación que suscribe, en uso de las funciones que le otorga el artículo 3.1, g) del Decreto 80/2017, de 23 de junio, del Consell, emite el presente informe de adecuación a la normativa vigente.';
+  doc.splitTextToSize(textoHabil, CW).forEach(l => { chk(5); doc.text(l, M, y); y+=4.5; });
+  doc.setTextColor(0,0,0); y+=4;
+
+  const secOficial = (num, titulo) => {
+    chk(10);
+    doc.setFillColor(26,58,110); doc.rect(M,y,CW,7,'F');
+    doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(8.5);
+    doc.text(num+'.- '+titulo, M+3, y+5);
+    y+=9; doc.setTextColor(0,0,0);
+  };
+
+  const cajaTexto = (texto, minH) => {
+    chk(minH||20);
+    const lines = doc.splitTextToSize(String(texto||'—'), CW-6);
+    const h = Math.max(minH||20, lines.length*5.2+6);
+    doc.setDrawColor(180,190,210); doc.setLineWidth(0.3);
+    doc.setFillColor(252,253,255); doc.rect(M,y,CW,h,'FD');
+    doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(30,30,30);
+    lines.forEach((l,i) => { chk(6); doc.text(l, M+3, y+5+i*5.2); });
+    y+=h+4;
+  };
+
+  const subLabel = (txt) => {
+    chk(6); doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(26,58,110);
+    doc.text(txt, M+2, y); y+=5; doc.setTextColor(0,0,0);
+  };
+
+  secOficial('1','ANTECEDENTES');
+  const antec = 'Visita de supervisión realizada el '+d.fechaVisita+' al centro '+d.centro+' ('+d.localidad+', '+d.provincia+', cód. '+d.codCentro+'). El/La Experto/a del Sector Productivo '+d.experto+' ('+d.dni+'), núm. de puesto: '+d.numeroPuesto+', modalidad: '+d.modalidad+', imparte el módulo '+d.modulo+' (cód. '+d.codModulo+') del ciclo '+d.ciclo+' ('+d.grado+'), familia: '+d.familia+'. Curso académico: '+d.cursoAcad+'. Base normativa del módulo: '+d.norm+'.';
+  cajaTexto(antec, 28);
+
+  secOficial('2','HECHOS');
+  subLabel('Verificación normativa previa — Art. 10 Instrucciones 2025/2026 · RD 659/2023 Disp. Adic. 15ª:');
+  const chkLabels = [
+    'El módulo no puede atribuirse a ninguna especialidad de los cuerpos docentes de FP ni del Cuerpo de Profesores de Enseñanza Secundaria en general.',
+    'La necesidad del Experto está contemplada en la propuesta de plantilla del centro para el curso 2025/2026.',
+    'Se han indicado en la propuesta de plantilla las horas de desdoble que asumirá el Experto (si procede).',
+    'El número de puestos creados está justificado y minimizado respecto a las horas asignadas.',
+    'La contratación se fundamenta en grupos autorizados por la Dirección General de Formación Profesional.'
+  ];
+  chkLabels.forEach((lbl, i) => {
+    chk(8);
+    doc.setFillColor(i%2===0?247:255, i%2===0?249:255, i%2===0?252:255);
+    doc.rect(M,y,CW,6.5,'F');
+    const marca = d.checklist[i];
+    const col = marca === '✔' ? [39,174,96] : [192,57,43];
+    doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(...col);
+    doc.text(marca, M+3, y+4.5);
+    doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(30,30,30);
+    doc.text((i+1)+'. '+lbl, M+10, y+4.5, {maxWidth: CW-13});
+    y+=6.5;
+  });
+  y+=4;
+
+  secOficial('3','NORMATIVA APLICABLE');
+  const normTxt = '· Real Decreto 659/2023, de 18 de julio — Cap. IV, Tít. V (arts. 170-174). Disp. Adic. 15ª.\n· '+d.norm+'\n· Real Decreto 499/2024 y Real Decreto 500/2024, de 21 de mayo.\n· Real Decreto 565/2024, de 18 de junio.\n· Real Decreto 1297/1995, de 21 de julio — Títulos GS Joyería de Arte. BOE núm. 221, 15/09/1995.\n· Real Decreto 1298/1995, de 21 de julio — Títulos GM Joyería de Arte. BOE núm. 221, 15/09/1995.\n· Real Decreto 370/2001, de 6 de abril — CFGS Óptica de Anteojería. BOE núm. 110, 08/05/2001.\n· Instrucciones DGPD para determinación de plantillas de Secundaria y FP, curso 2025/2026 (Art. 10).\n· Instrucció 8/2025 de la Inspecció General d\'Educació.\n· Decreto 80/2017, de 23 de junio, del Consell — Art. 3.1.g y Art. 20.\n· Orden 17/2019, de 16 de abril — Arts. 27, 28 y 29.';
+  cajaTexto(normTxt, 55);
+
+  secOficial('4','CONSIDERACIONES, FUNDAMENTOS DE DERECHO Y CONCLUSIONES');
+  subLabel('Tipo de actuación sobre el puesto:');
+  chk(10);
+  doc.setFillColor(26,58,110); doc.roundedRect(M,y,CW,8,2,2,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
+  doc.text(d.necesidad||'—', W/2, y+5.5, {align:'center', maxWidth:CW-6});
+  doc.setTextColor(0,0,0); y+=12;
+  subLabel('Justificación:');
+  cajaTexto(d.justificacion, 22);
+
+  secOficial('5','PROPUESTA');
+  chk(6); doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(60,60,60);
+  doc.text('A la vista de todo lo anterior,', M+2, y); y+=7; doc.setTextColor(0,0,0);
+  cajaTexto(d.propuesta, 20);
+
+  chk(32);
+  doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(60,60,60);
+  const hoy = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  doc.text('En __________________________ a '+hoy, M, y); y+=14;
+  doc.setDrawColor(80,80,80); doc.setLineWidth(0.4);
+  doc.line(M, y, M+70, y);
+  doc.line(W-M-70, y, W-M, y);
+  y+=4;
+  doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(30,30,30);
+  doc.text('El/La Inspector/a de Educación', M+10, y);
+  doc.text('Visto Bueno Inspector/a Jefe/a Territorial', W-M-65, y);
+  y+=5;
+  doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(80,80,80);
+  doc.text(d.inspector, M+10, y);
+  doc.text('['+d.codInspector+'] — '+d.demarc, M+10, y+4);
+
+  const pages = doc.internal.getNumberOfPages();
+  for(let p=1;p<=pages;p++){
+    doc.setPage(p);
+    doc.setFillColor(26,58,110); doc.rect(0,287,W,10,'F');
+    doc.setFont('helvetica','normal'); doc.setFontSize(6.5); doc.setTextColor(255,255,255);
+    doc.text('Inspecció Educativa CV — Informe Supervisió Expert Sector Productiu FP · Instrucció 8/2025 IGE · Decreto 80/2017', M, 293);
+    doc.text('Pàg. '+p+'/'+pages, W-M, 293,{align:'right'});
+  }
+  const nm=(d.experto!=='—'?d.experto.replace(/ /g,'_'):'Experto');
+  doc.save(`Informe_Supervision_${nm}_${d.fechaVisita||'sin_fecha'}.pdf`);
+}
+
+function openEmail(){ if(!codOK){alert('Valide el código del inspector primero.');return;} document.getElementById('emailModal').classList.add('open'); }
+function closeEmail(){ document.getElementById('emailModal').classList.remove('open'); }
+function sendEmail(){
+  const d=getData();
+  const dest=document.getElementById('eDest').value;
+  const cc=document.getElementById('eCC').value;
+  const asunto=encodeURIComponent(document.getElementById('eAsunto').value);
+  const msg=document.getElementById('eMsg').value;
+  const body=encodeURIComponent(`${msg}\n\n--- RESUMEN DEL INFORME ---\nCentro: ${d.centro} (${d.localidad}, ${d.provincia})\nFecha visita: ${d.fechaVisita}\nExperto/a: ${d.experto} — ${d.dni}\nNúm. de puesto: ${d.numeroPuesto}\nModalidad: ${d.modalidad}\nFamilia: ${d.familia}\nCiclo: ${d.ciclo}\nMódulo: ${d.modulo} (${d.codModulo})\nTipo de actuación: ${d.necesidad}\nPropuesta: ${d.propuesta}\nInspector/a: ${d.inspector} [${d.codInspector}]\nBase normativa: ${d.norm}`);
+  let mailto=`mailto:${dest}?subject=${asunto}&body=${body}`;
+  if(cc) mailto+=`&cc=${cc}`;
+  window.location.href=mailto;
+  closeEmail();
+}
+function ambos(){ genPDF(); setTimeout(openEmail,600); }
+function openPA(){
+  if(!codOK){alert('Valide el código del inspector primero.');return;}
+  if(!chksOK()){alert('Debe verificar todos los requisitos normativos previos antes de enviar.');return;}
+  const saved = localStorage.getItem('paUrl');
+  if(saved) document.getElementById('paUrl').value = saved;
+  document.getElementById('paModal').classList.add('open');
+}
+function closePA(){ document.getElementById('paModal').classList.remove('open'); }
+async function sendToPA(){
+  const url = document.getElementById('paUrl').value.trim();
+  if(!url){ alert('Introduce la URL del flujo de Power Automate.'); return; }
+  localStorage.setItem('paUrl', url);
+  const d = getData();
+  const payload = {
+    fecha_visita: d.fechaVisita,
+    centro: d.centro,
+    cod_centro: d.codCentro,
+    localidad: d.localidad,
+    provincia: d.provincia,
+    experto: d.experto,
+    dni: d.dni,
+    numero_puesto: d.numeroPuesto,
+    modalidad: d.modalidad,
+    familia: d.familia,
+    ciclo: d.ciclo,
+    modulo: d.modulo,
+    cod_modulo: d.codModulo,
+    grado: d.grado,
+    curso_academico: d.cursoAcad,
+    necesidad_detectada: d.necesidad,
+    justificacion: d.justificacion,
+    propuesta: d.propuesta,
+    inspector: d.inspector,
+    demarcacion: d.demarc,
+    cod_inspector: d.codInspector,
+    base_normativa: d.norm,
+    checklist_1: d.checklist[0],
+    checklist_2: d.checklist[1],
+    checklist_3: d.checklist[2],
+    checklist_4: d.checklist[3],
+    checklist_5: d.checklist[4],
+    timestamp: new Date().toISOString()
+  };
+  const st = document.getElementById('paStatus');
+  st.style.display = 'block';
+  st.style.background = '#fff8e1';
+  st.style.color = '#856404';
+  st.style.border = '1px solid #ffd54f';
+  st.textContent = 'Enviando datos a SharePoint...';
+  closePA();
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if(resp.ok || resp.status === 202){
+      st.style.background = '#eefaf3';
+      st.style.color = '#27ae60';
+      st.style.border = '1px solid #b2dfcc';
+      st.textContent = '✔ Datos enviados correctamente a SharePoint. Recuerda subir el PDF a la carpeta correspondiente.';
+    } else {
+      throw new Error('HTTP '+resp.status);
+    }
+  } catch(e){
+    st.style.background = '#fdf0ee';
+    st.style.color = '#c0392b';
+    st.style.border = '1px solid #f5c6c0';
+    st.textContent = '⚠ Error al enviar: ' + e.message + '. Comprueba la URL del flujo.';
+  }
+}
+
+</script>
+</body>
+</html>
