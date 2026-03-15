@@ -892,66 +892,69 @@ function ambos(){ genPDF(); setTimeout(openEmail,600); }
 function openPA(){
   if(!codOK){alert('Valide el código del inspector primero.');return;}
   if(!chksOK()){alert('Debe verificar todos los requisitos normativos previos antes de enviar.');return;}
-  const d = getData();
-  const resumen = document.getElementById('paResumen');
-  resumen.innerHTML = `
-    <div style="font-size:11px;color:#1a3a6e;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Resumen — copia estos datos al formulario</div>
-    <table style="width:100%;border-collapse:collapse;font-size:11px">
-      ${[
-        ['Centro', d.centro],
-        ['Código de centro', d.codCentro],
-        ['Fecha de visita', d.fechaVisita],
-        ['Experto/a', d.experto],
-        ['DNI/NIE', d.dni],
-        ['Número de puesto', d.numeroPuesto],
-        ['Modalidad', d.modalidad],
-        ['Familia profesional', d.familia],
-        ['Ciclo formativo', d.ciclo],
-        ['Módulo profesional', d.modulo],
-        ['Grado', d.grado],
-        ['Curso académico', d.cursoAcad],
-        ['Necesidad detectada', d.necesidad],
-        ['Justificación', d.justificacion],
-        ['Propuesta', d.propuesta],
-        ['Inspector/a', d.inspector],
-        ['Demarcación', d.demarc],
-      ].map(([k,v],i) => `<tr style="background:${i%2===0?'#f2f5fa':'#fff'}">
-        <td style="padding:4px 8px;font-weight:600;color:#1a3a6e;width:38%;border:1px solid #d0d8e8">${k}</td>
-        <td style="padding:4px 8px;color:#1a2333;border:1px solid #d0d8e8">${v||'—'}</td>
-      </tr>`).join('')}
-    </table>`;
-  document.getElementById('paModal').classList.add('open');
+  enviarPA();
 }
 function closePA(){ document.getElementById('paModal').classList.remove('open'); }
-function abrirForms(){
+async function enviarPA(){
   const d = getData();
-  const base = 'https://docs.google.com/forms/d/e/1FAIpQLSc3bs4kDV81m47fb0UC4eaJqeOvUVf_kMRMmLVVfxfEm3UeAQ/viewform?usp=pp_url';
-  const enc = encodeURIComponent;
-  const url = base
-    + '&entry.175881571='   + enc(d.centro)
-    + '&entry.286403546='   + enc(d.codCentro)
-    + '&entry.1508909563='  + enc(d.experto)
-    + '&entry.1694418105='  + enc(d.dni)
-    + '&entry.1145478996='  + enc(d.numeroPuesto)
-    + '&entry.386741110='   + enc(d.familia)
-    + '&entry.1073065996='  + enc(d.ciclo)
-    + '&entry.919339729='   + enc(d.modulo)
-    + '&entry.2117590447='  + enc(d.grado)
-    + '&entry.368658465='   + enc(d.cursoAcad)
-    + '&entry.1647510833='  + enc(d.inspector)
-    + '&entry.1377911291='  + enc(d.demarc)
-    + '&entry.1518883899='  + enc(d.fechaVisita)
-    + '&entry.85075475='    + enc(d.modalidad)
-    + '&entry.1202951769='  + enc(d.necesidad)
-    + '&entry.1330501685='  + enc(d.justificacion)
-    + '&entry.1078821878='  + enc(d.propuesta);
-  window.open(url, '_blank');
   const st = document.getElementById('paStatus');
   st.style.display = 'block';
-  st.style.background = '#eefaf3';
-  st.style.color = '#27ae60';
-  st.style.border = '1px solid #b2dfcc';
-  st.textContent = '\u2714 Formulario abierto con todos los datos rellenados. Solo tienes que pulsar Enviar en Google Forms.';
+  st.style.background = '#fff8e1';
+  st.style.color = '#856404';
+  st.style.border = '1px solid #ffd54f';
+  st.textContent = 'Enviando datos a SharePoint...';
+  const payload = {
+    fecha_visita: d.fechaVisita,
+    centro: d.centro,
+    cod_centro: d.codCentro,
+    localidad: d.localidad,
+    provincia: d.provincia,
+    experto: d.experto,
+    dni: d.dni,
+    numero_puesto: d.numeroPuesto,
+    modalidad: d.modalidad,
+    familia: d.familia,
+    ciclo: d.ciclo,
+    modulo: d.modulo,
+    cod_modulo: d.codModulo,
+    grado: d.grado,
+    curso_academico: d.cursoAcad,
+    necesidad_detectada: d.necesidad,
+    justificacion: d.justificacion,
+    propuesta: d.propuesta,
+    inspector: d.inspector,
+    demarcacion: d.demarc,
+    cod_inspector: d.codInspector,
+    base_normativa: d.norm,
+    checklist_1: d.checklist[0],
+    checklist_2: d.checklist[1],
+    checklist_3: d.checklist[2],
+    checklist_4: d.checklist[3],
+    checklist_5: d.checklist[4],
+    timestamp: new Date().toISOString()
+  };
+  try {
+    const resp = await fetch('https://default26c4f2b0d79c48d89b6c60524a48f1.28.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e61f935c9664421495bbbfd5650dad35/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=UTL8sT87QAWXKDMXRK9ugPYcjrGqCupLk8VW4WTQXn0', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if(resp.ok || resp.status === 202 || resp.status === 200){
+      st.style.background = '#eefaf3';
+      st.style.color = '#27ae60';
+      st.style.border = '1px solid #b2dfcc';
+      st.textContent = '\u2714 Datos enviados correctamente a SharePoint.';
+    } else {
+      throw new Error('HTTP '+resp.status);
+    }
+  } catch(e){
+    st.style.background = '#fdf0ee';
+    st.style.color = '#c0392b';
+    st.style.border = '1px solid #f5c6c0';
+    st.textContent = '\u26a0 Error al enviar: '+e.message+'. Comprueba el flujo de Power Automate.';
+  }
+}
+function abrirForms(){
   closePA();
 }
 
