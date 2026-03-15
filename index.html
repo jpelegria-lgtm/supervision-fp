@@ -249,21 +249,15 @@ textarea{resize:vertical;min-height:72px}
 </div>
 
 <!-- MODAL EMAIL -->
-<!-- MODAL POWER AUTOMATE -->
+<!-- MODAL POWER AUTOMATE / FORMS -->
 <div class="modal-bg" id="paModal">
-  <div class="modal-box">
-    <h3>&#9729;&#65039; Enviar datos a SharePoint</h3>
-    <p style="font-size:11px;color:#555;margin-bottom:12px">Introduce la URL del flujo de Power Automate. Una vez configurada se guardará para futuras sesiones.</p>
-    <div class="row c1" style="margin-bottom:8px">
-      <label>URL del flujo HTTP de Power Automate</label>
-      <input id="paUrl" placeholder="https://prod-xx.westeurope.logic.azure.com/workflows/...">
-    </div>
-    <div style="font-size:10px;color:#888;background:#f7f9fc;padding:7px 10px;border-radius:4px;border-left:3px solid #0078d4;margin-bottom:10px">
-      Esta URL la obtienes en Power Automate al crear el flujo con el disparador <strong>"Cuando se recibe una solicitud HTTP"</strong>. Ver instrucciones adjuntas.
-    </div>
+  <div class="modal-box" style="max-width:560px;max-height:80vh;overflow-y:auto">
+    <h3>&#9729;&#65039; Enviar a SharePoint via Forms</h3>
+    <p style="font-size:11px;color:#555;margin-bottom:10px">Copia los datos del resumen al formulario que se abrirá y pulsa Enviar.</p>
+    <div id="paResumen" style="margin-bottom:12px"></div>
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closePA()">Cancelar</button>
-      <button style="flex:1;padding:9px;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:12px;background:#0078d4;color:#fff" onclick="sendToPA()">Enviar &#8594;</button>
+      <button style="flex:1;padding:9px;border:none;border-radius:5px;cursor:pointer;font-weight:700;font-size:12px;background:#0078d4;color:#fff" onclick="abrirForms()">Abrir formulario &#8594;</button>
     </div>
   </div>
 </div>
@@ -898,73 +892,46 @@ function ambos(){ genPDF(); setTimeout(openEmail,600); }
 function openPA(){
   if(!codOK){alert('Valide el código del inspector primero.');return;}
   if(!chksOK()){alert('Debe verificar todos los requisitos normativos previos antes de enviar.');return;}
-  const saved = localStorage.getItem('paUrl');
-  if(saved) document.getElementById('paUrl').value = saved;
+  const d = getData();
+  const resumen = document.getElementById('paResumen');
+  resumen.innerHTML = `
+    <div style="font-size:11px;color:#1a3a6e;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Resumen — copia estos datos al formulario</div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px">
+      ${[
+        ['Centro', d.centro],
+        ['Código de centro', d.codCentro],
+        ['Fecha de visita', d.fechaVisita],
+        ['Experto/a', d.experto],
+        ['DNI/NIE', d.dni],
+        ['Número de puesto', d.numeroPuesto],
+        ['Modalidad', d.modalidad],
+        ['Familia profesional', d.familia],
+        ['Ciclo formativo', d.ciclo],
+        ['Módulo profesional', d.modulo],
+        ['Grado', d.grado],
+        ['Curso académico', d.cursoAcad],
+        ['Necesidad detectada', d.necesidad],
+        ['Justificación', d.justificacion],
+        ['Propuesta', d.propuesta],
+        ['Inspector/a', d.inspector],
+        ['Demarcación', d.demarc],
+      ].map(([k,v],i) => `<tr style="background:${i%2===0?'#f2f5fa':'#fff'}">
+        <td style="padding:4px 8px;font-weight:600;color:#1a3a6e;width:38%;border:1px solid #d0d8e8">${k}</td>
+        <td style="padding:4px 8px;color:#1a2333;border:1px solid #d0d8e8">${v||'—'}</td>
+      </tr>`).join('')}
+    </table>`;
   document.getElementById('paModal').classList.add('open');
 }
 function closePA(){ document.getElementById('paModal').classList.remove('open'); }
-async function sendToPA(){
-  const url = document.getElementById('paUrl').value.trim();
-  if(!url){ alert('Introduce la URL del flujo de Power Automate.'); return; }
-  localStorage.setItem('paUrl', url);
-  const d = getData();
-  const payload = {
-    fecha_visita: d.fechaVisita,
-    centro: d.centro,
-    cod_centro: d.codCentro,
-    localidad: d.localidad,
-    provincia: d.provincia,
-    experto: d.experto,
-    dni: d.dni,
-    numero_puesto: d.numeroPuesto,
-    modalidad: d.modalidad,
-    familia: d.familia,
-    ciclo: d.ciclo,
-    modulo: d.modulo,
-    cod_modulo: d.codModulo,
-    grado: d.grado,
-    curso_academico: d.cursoAcad,
-    necesidad_detectada: d.necesidad,
-    justificacion: d.justificacion,
-    propuesta: d.propuesta,
-    inspector: d.inspector,
-    demarcacion: d.demarc,
-    cod_inspector: d.codInspector,
-    base_normativa: d.norm,
-    checklist_1: d.checklist[0],
-    checklist_2: d.checklist[1],
-    checklist_3: d.checklist[2],
-    checklist_4: d.checklist[3],
-    checklist_5: d.checklist[4],
-    timestamp: new Date().toISOString()
-  };
+function abrirForms(){
+  window.open('https://forms.microsoft.com/Pages/ResponsePage.aspx?id=sPLEJpzX2EibbGBSSkjxKJKcqrDfPE1NhOe6sH4Cn8pUMVRKM0xRSjgwNEJDUzU2TVdUWE01RDY0TS4u','_blank');
   const st = document.getElementById('paStatus');
   st.style.display = 'block';
-  st.style.background = '#fff8e1';
-  st.style.color = '#856404';
-  st.style.border = '1px solid #ffd54f';
-  st.textContent = 'Enviando datos a SharePoint...';
+  st.style.background = '#eefaf3';
+  st.style.color = '#27ae60';
+  st.style.border = '1px solid #b2dfcc';
+  st.textContent = '\u2714 Formulario de registro abierto en nueva pestaña. Copia los datos del resumen y pulsa Enviar en el formulario.';
   closePA();
-  try {
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
-    });
-    if(resp.ok || resp.status === 202){
-      st.style.background = '#eefaf3';
-      st.style.color = '#27ae60';
-      st.style.border = '1px solid #b2dfcc';
-      st.textContent = '✔ Datos enviados correctamente a SharePoint. Recuerda subir el PDF a la carpeta correspondiente.';
-    } else {
-      throw new Error('HTTP '+resp.status);
-    }
-  } catch(e){
-    st.style.background = '#fdf0ee';
-    st.style.color = '#c0392b';
-    st.style.border = '1px solid #f5c6c0';
-    st.textContent = '⚠ Error al enviar: ' + e.message + '. Comprueba la URL del flujo.';
-  }
 }
 
 </script>
