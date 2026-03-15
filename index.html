@@ -924,13 +924,34 @@ function openPA(){
 }
 function closePA(){ document.getElementById('paModal').classList.remove('open'); }
 function abrirForms(){
-  window.open('https://forms.microsoft.com/Pages/ResponsePage.aspx?id=sPLEJpzX2EibbGBSSkjxKJKcqrDfPE1NhOe6sH4Cn8pUMVRKM0xRSjgwNEJDUzU2TVdUWE01RDY0TS4u','_blank');
+  const d = getData();
+  const base = 'https://docs.google.com/forms/d/e/1FAIpQLSc3bs4kDV81m47fb0UC4eaJqeOvUVf_kMRMmLVVfxfEm3UeAQ/viewform?usp=pp_url';
+  const enc = encodeURIComponent;
+  const url = base
+    + '&entry.175881571='   + enc(d.centro)
+    + '&entry.286403546='   + enc(d.codCentro)
+    + '&entry.1508909563='  + enc(d.experto)
+    + '&entry.1694418105='  + enc(d.dni)
+    + '&entry.1145478996='  + enc(d.numeroPuesto)
+    + '&entry.386741110='   + enc(d.familia)
+    + '&entry.1073065996='  + enc(d.ciclo)
+    + '&entry.919339729='   + enc(d.modulo)
+    + '&entry.2117590447='  + enc(d.grado)
+    + '&entry.368658465='   + enc(d.cursoAcad)
+    + '&entry.1647510833='  + enc(d.inspector)
+    + '&entry.1377911291='  + enc(d.demarc)
+    + '&entry.1518883899='  + enc(d.fechaVisita)
+    + '&entry.85075475='    + enc(d.modalidad)
+    + '&entry.1202951769='  + enc(d.necesidad)
+    + '&entry.1330501685='  + enc(d.justificacion)
+    + '&entry.1078821878='  + enc(d.propuesta);
+  window.open(url, '_blank');
   const st = document.getElementById('paStatus');
   st.style.display = 'block';
   st.style.background = '#eefaf3';
   st.style.color = '#27ae60';
   st.style.border = '1px solid #b2dfcc';
-  st.textContent = '\u2714 Formulario de registro abierto en nueva pestaña. Copia los datos del resumen y pulsa Enviar en el formulario.';
+  st.textContent = '\u2714 Formulario abierto con todos los datos rellenados. Solo tienes que pulsar Enviar en Google Forms.';
   closePA();
 }
 
