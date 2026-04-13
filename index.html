@@ -768,12 +768,12 @@ async function enviarPA(){
     st.textContent='⚠ Error al enviar: '+e.message;
   }
 }
+
+function openPA(){
+  if(!codOK){alert('Valide el inspector primero.');return;}
+  enviarPA();
+}
+
 </script>
-
-
-
-
-
-
 </body>
 </html>
